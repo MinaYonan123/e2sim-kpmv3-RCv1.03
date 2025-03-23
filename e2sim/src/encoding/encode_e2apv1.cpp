@@ -559,13 +559,10 @@ void encoding::generate_e2apv1_subscription_response_success(E2AP_PDU *e2ap_pdu,
         ricactionrejected->id = ProtocolIE_ID_id_RICactions_NotAdmitted;
         ricactionrejected->criticality = Criticality_reject;
         ricactionrejected->value.present = RICsubscriptionResponse_IEs__value_PR_RICaction_NotAdmitted_List;
-        printf("[Mina] I'm here 1 ") ;
         auto *rejectlist =
                 (RICaction_NotAdmitted_List_t *) calloc(1, sizeof(RICaction_NotAdmitted_List_t));
-                        printf("[Mina] I'm here 2 \n ") ;
 
         ricactionrejected->value.choice.RICaction_NotAdmitted_List = *rejectlist;
-                printf("[Mina] I'm here 3 \n") ;
 
     if (numReject > 0) {
 
@@ -587,7 +584,6 @@ void encoding::generate_e2apv1_subscription_response_success(E2AP_PDU *e2ap_pdu,
 
     }
    ASN_SEQUENCE_ADD(&ricsubresp->protocolIEs.list, ricactionrejected);
-               printf("[Mina] I'm here 4 \n") ;
 
 //====================================================================================
 
@@ -627,19 +623,14 @@ void encoding::generate_e2apv1_subscription_response_success(E2AP_PDU *e2ap_pdu,
     successoutcome->criticality = Criticality_reject;
     successoutcome->value.present = SuccessfulOutcome__value_PR_RICsubscriptionResponse;
     successoutcome->value.choice.RICsubscriptionResponse = *ricsubresp;
-               printf("[Mina] I'm here 5 \n") ;
 
     e2ap_pdu->present = E2AP_PDU_PR_successfulOutcome;
     e2ap_pdu->choice.successfulOutcome = successoutcome;
-               printf("[Mina] I'm here 6 \n") ;
 
     char *error_buf = (char *) calloc(300, sizeof(char));
     size_t errlen;
-               printf("[Mina] I'm here 7 \n") ;
 
     asn_check_constraints(&asn_DEF_E2AP_PDU, e2ap_pdu, error_buf, &errlen);
-
-                   printf("[Mina] I'm here 8 \n") ;
 
 }
 

@@ -106,7 +106,7 @@ add_subdirectory(src/SCTP)
 add_subdirectory(src/messagerouting)
 add_subdirectory(src/base)
 add_subdirectory(src/encoding)
-
+add_subdirectory(src/CCC-SM)
 
 add_library( e2sim_shared SHARED
 
@@ -128,7 +128,12 @@ if( DEV_PKG )
    			       VERSION ${major_version}.${minor_version}.${patch_level}
 	)
 
-	target_include_directories( e2sim_static PUBLIC "src/DEF" "src/SCTP" "src/messagerouting" "src/base" "src/encoding" "src/ASN1c" )	
+	target_include_directories( e2sim_static PUBLIC "src/DEF" "src/SCTP" "src/messagerouting" "src/base" "src/encoding" "src/ASN1c" "src/CCC-SM" )
+
+	target_link_libraries( e2sim_static
+		PRIVATE
+			asn1c
+	)	
 endif()
 
 

@@ -882,3 +882,22 @@ void encoding::generate_e2apv1_indication_request_parameterized(E2AP_PDU *e2ap_p
         xer_fprint(stderr, &asn_DEF_E2AP_PDU, e2ap_pdu);
     free(errbuff);
 }
+
+// MCC/MNC as decimal strings, e.g. mcc="001", mnc="01" (2-digit) or "001" (3-digit)
+void encoding::encode_plmn_bcd(uint8_t out[3], const char* mcc, const char* mnc)
+{
+  uint8_t mcc1 = mcc[0]-'0', mcc2 = mcc[1]-'0', mcc3 = mcc[2]-'0';
+  uint8_t mnc1 = mnc[0]-'0', mnc2 = mnc[1]-'0';
+  uint8_t mnc3 = (strlen(mnc) == 3) ? (mnc[2]-'0') : 0x0F;  // filler for 2-digit MNC
+  out[0] = (mcc2 << 4) | mcc1;
+  out[1] = (mnc3 << 4) | mcc3;
+  out[2] = (mnc2 << 4) | mnc1;
+}
+
+void encoding::encode_gnb_id_be32(uint8_t out[4], uint32_t gnbId)
+{
+  out[0] = (gnbId >> 24) & 0xFF;
+  out[1] = (gnbId >> 16) & 0xFF;
+  out[2] = (gnbId >>  8) & 0xFF;
+  out[3] =  gnbId        & 0xFF;
+}

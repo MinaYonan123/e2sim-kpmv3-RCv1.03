@@ -22,6 +22,7 @@
 #define ENCODE_E2APV1_HPP
 
 #include <vector>
+#include <cstdint>
 #include <e2sim.hpp>
 
 
@@ -66,6 +67,9 @@ namespace encoding {
   long get_function_id_from_control_request(E2AP_PDU_t *pdu);
 
   OCTET_STRING_t most_copy_src_ostring_to_dst_ostring ();
+
+  void encode_plmn_bcd(uint8_t out[3], const char* mcc, const char* mnc);
+  void encode_gnb_id_be32(uint8_t out[4], uint32_t gnbId);
 }
 
 #endif
